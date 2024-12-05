@@ -2,7 +2,7 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query"
 import { Service } from "../types/Service"
 import { SuccessResponse } from "../types/SuccessResponse"
 import { pathValidator } from "../utils/pathValidator"
-import { fetchPaginatedCollectionT } from "../api/ApiShared"
+import { fetchPaginatedCollectionT, fetchTByID } from "../api/ApiShared"
 import { HookFetchParams } from "../types/HookFetchParams"
 
 const POLE_SANTE_TOKEN: string = import.meta.env.VITE_POLE_SANTE_API_TOKEN
@@ -38,6 +38,41 @@ export const useServices = ({
     return useQuery<SuccessResponse<Service>, Error>({
         queryKey: ["Services", token, searchQuery],
         queryFn: () => fetchPaginatedCollectionT<Service>(token, searchQuery),
+        enabled: shouldFetch
+    })
+}
+
+
+/**
+ * useServiceByID - Custom React hook to fetch a `Service` object by its ID.
+ *
+ * @param {HookFetchParams} params - An object containing the necessary variables for fetching data.
+ * @param {string} params.token - The token used for authorization in the request.
+ * @param {string} [params.searchQuery = ""] - Represents the part of the URL containing the relative path for the resource, including the object ID. 
+ * Must follow the format `/services/{id}` where `{id}` is a positive integer. Default is an empty string.
+ * @param {boolean} [params.shouldFetch = true] - A boolean indicating whether the `Service` data should be fetched or not. Default is `true`.
+ * 
+ * @returns {UseQueryResult<Service, Error>} - An object containing the `Service` data, query status, and error information, if any.
+ * 
+ * @throws {Error} - If an error occurs during the fetch operation.
+ */
+export const useServiceByID = ({
+    token, 
+    searchQuery = "", 
+    shouldFetch = true 
+    }:HookFetchParams ): UseQueryResult<Service, Error> => {
+
+    if(!token) token = POLE_SANTE_TOKEN
+
+    const serviceByIdURLRegex: RegExp = /^\/services\/[1-9][0-9]{0,5}$/
+
+    if(!pathValidator({regex: serviceByIdURLRegex, stringToValidate: searchQuery}))
+        shouldFetch = false
+
+
+    return useQuery<Service, Error>({
+        queryKey: ['ServiceByID', token, searchQuery],
+        queryFn: () => fetchTByID<Service>(token, searchQuery),
         enabled: shouldFetch
     })
 }

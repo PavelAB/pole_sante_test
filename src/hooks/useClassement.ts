@@ -75,7 +75,7 @@ export const useClassementByID = ({
 
 
     return useQuery<Classement, Error>({
-        queryKey: ['ClassementsByID', token, searchQuery],
+        queryKey: ['ClassementByID', token, searchQuery],
         queryFn: () => fetchTByID<Classement>(token, searchQuery),
         enabled: shouldFetch
     })
