@@ -1,27 +1,31 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query"
-import { fetchClassements } from "../api/ApiClassement"
+import { fetchPaginatedCollectionT } from "../api/ApiShared"
 import { SuccessResponse } from "../types/SuccessResponse"
 import { Classement } from "../types/Classement"
 import { pathValidator } from "../utils/pathValidator"
+import { HookFetchParams } from "../types/HookFetchParams"
 
 
 const POLE_SANTE_TOKEN: string = import.meta.env.VITE_POLE_SANTE_API_TOKEN
 
 
-
 /**
  * useClassements - Custom React hook to handle the fetching of a collection of `Classement`.
  *
- * @param {Object} params - An object containing the necessary variables for fetching data.
+ * @param {HookFetchParams} params - An object containing the necessary variables for fetching data.
  * @param {string} params.token - The token used for authorization in the request.
- * @param {string} [params.searchQuery="/classements?page=1"] - Represents the part of the URL containing the relative path for the resource 
+ * @param {string} [params.searchQuery = "/classements?page=1"] - Represents the part of the URL containing the relative path for the resource 
  * and a query string specifying the desired page. (Default is "/classements?page=1"). The format must be respected; only the page number can be changed.
- * @param {boolean} [params.shouldFetch=true] - A boolean indicating whether the `Classement` data should be fetched or not. (Default is `true`).
+ * @param {boolean} [params.shouldFetch = true] - A boolean indicating whether the `Classement` data should be fetched or not. (Default is `true`).
  * 
  * @returns {UseQueryResult<SuccessResponse<Classement>, Error>} An object containing the fetched data and other complementary information.
  * @throws {Error} If an error occurs during the fetch operation.
  */
-export const useClassements = ({token, searchQuery = "/classements?page=1", shouldFetch = true}:{token: string, searchQuery?: string, shouldFetch?: boolean}):UseQueryResult<SuccessResponse<Classement>, Error> => {
+export const useClassements = ({
+    token, 
+    searchQuery = "/classements?page=1", 
+    shouldFetch = true 
+    }:HookFetchParams ): UseQueryResult<SuccessResponse<Classement>, Error> => {
 
 
     /**
@@ -37,7 +41,7 @@ export const useClassements = ({token, searchQuery = "/classements?page=1", shou
 
     return useQuery<SuccessResponse<Classement>, Error>({
         queryKey: ['Classements', token, searchQuery],
-        queryFn: () => fetchClassements(token, searchQuery),
+        queryFn: () => fetchPaginatedCollectionT<Classement>(token, searchQuery),
         enabled: shouldFetch
     })
 }
