@@ -28,9 +28,9 @@ export const usePreferences = ({
 }: HookFetchParams): UseQueryResult<SuccessResponse<Preference>, Error> => {
 
 
-    const ___URLRegex: RegExp = /^\/preferences\?page=[1-9][0-9]{0,2}$/
+    const preferenceURLRegex: RegExp = /^\/preferences\?page=[1-9][0-9]{0,2}$/
 
-    if(!pathValidator({regex: ___URLRegex, stringToValidate: searchQuery}))
+    if(!pathValidator({regex: preferenceURLRegex, stringToValidate: searchQuery}))
         shouldFetch = false
 
     if(!token) token = POLE_SANTE_TOKEN

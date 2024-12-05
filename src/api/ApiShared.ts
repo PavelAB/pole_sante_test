@@ -45,3 +45,36 @@ export const fetchPaginatedCollectionT = async <T extends AllowedTypes>(token: s
     
     return result as SuccessResponse<T>
 }
+
+
+
+/**
+ * fetchTByID - Retrieves an object of a specific type <T> by its ID. This function is generic and can be reused for fetching objects of types extended from AllowedTypes.
+ * 
+ * @template T - A generic type representing the resource being fetched. Must be one of the allowed types: [Classement, Hopital, Place, Preference, Resultat, Service].
+ * 
+ * @param {string} searchQuery - Represents the part of the URL containing the relative path for the resource, including the identifier (e.g., `/classements/123`).
+ * @param {string} token - The token used for authorization in the request.
+ * 
+ * @returns {Promise<T>} A promise that resolves to an object of type `T`.
+ * @throws {Error} If the fetch operation fails or the response contains an error.
+ */
+export const fetchTByID = async <T extends AllowedTypes>(token: string, searchQuery: string): Promise<T> => {
+    const url: string = POLE_SANTE_URL + searchQuery
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Authorization": token,
+            "Accept": "application/ld+json"
+        }
+    })
+
+    const result: T | ErrorResponse = await response.json()
+
+    if(!response.ok){
+        const errorResponse: ErrorResponse = result as ErrorResponse
+        throw new Error(`${errorResponse["hydra:description"]}`)
+    }
+    
+    return result as T
+}
