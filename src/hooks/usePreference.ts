@@ -1,0 +1,43 @@
+import { useQuery, UseQueryResult } from "@tanstack/react-query"
+import { fetchPaginatedCollectionT } from "../api/ApiShared"
+import { Preference } from "../types/Preference"
+import { SuccessResponse } from "../types/SuccessResponse"
+import { pathValidator } from "../utils/pathValidator"
+import { HookFetchParams } from "../types/HookFetchParams"
+
+const POLE_SANTE_TOKEN: string = import.meta.env.VITE_POLE_SANTE_API_TOKEN
+
+
+
+/**
+ * usePreferences - Custom React hook to handle the fetching of a collection of `Preference`.
+ *
+ * @param {HookFetchParams} params - An object containing the necessary variables for fetching data.
+ * @param {string} params.token - The token used for authorization in the request.
+ * @param {string} [params.searchQuery = "/preferences?page=1"] - Represents the part of the URL containing the relative path for the resource 
+ * and a query string specifying the desired page. (Default is "/preferences?page=1"). The format must be respected; only the page number can be changed.
+ * @param {boolean} [params.shouldFetch = true] - A boolean indicating whether the `Preference` data should be fetched or not. (Default is `true`).
+ * 
+ * @returns {UseQueryResult<SuccessResponse<Preference>, Error>} An object containing the fetched data and other complementary information.
+ * @throws {Error} If an error occurs during the fetch operation.
+ */
+export const usePreferences = ({
+    token,
+    searchQuery = "/preferences?page=1",
+    shouldFetch = true
+}: HookFetchParams): UseQueryResult<SuccessResponse<Preference>, Error> => {
+
+
+    const ___URLRegex: RegExp = /^\/preferences\?page=[1-9][0-9]{0,2}$/
+
+    if(!pathValidator({regex: ___URLRegex, stringToValidate: searchQuery}))
+        shouldFetch = false
+
+    if(!token) token = POLE_SANTE_TOKEN
+
+    return useQuery<SuccessResponse<Preference>, Error>({
+        queryKey: ["Preferences", token, searchQuery],
+        queryFn: () => fetchPaginatedCollectionT<Preference>(token, searchQuery),
+        enabled: shouldFetch
+    })
+}
