@@ -62,7 +62,7 @@ const Header: React.FC = () => {
     }
  
     return (
-        <div className="m-0 col-span-12 flex flex-col justify-start items-center bg-slate-200">
+        <header className="m-0 col-span-12 flex flex-col justify-start items-center bg-slate-200">
             <div className="w-full flex justify-between items-center">
                 <div className="mx-10 h-10 w-10 flex items-center justify-center">
                     <NavLink  
@@ -114,7 +114,7 @@ const Header: React.FC = () => {
                     </ul>
                 }
             </div>
-        </div>
+        </header>
     )
 }
 export default Header

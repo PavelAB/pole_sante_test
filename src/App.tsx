@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom"
 import Header from "./components/layout/header/Header"
+import Footer from "./components/layout/footer/Footer"
 
 
 function App() {
@@ -14,9 +15,7 @@ function App() {
       }}>
         <Header />
         <Outlet />
-        <div className="m-0 col-span-12 p-5 flex justify-between items-center border border-blue-700">
-          Footer
-        </div>
+        <Footer />
       </div>
     </div>
   )

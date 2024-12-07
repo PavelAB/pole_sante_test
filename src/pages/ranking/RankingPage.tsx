@@ -2,7 +2,7 @@
 
 const RankingPage: React.FC = () => {
     return (
-        <div>
+        <div className="">
             <h1>Ranking Page</h1>
         </div>
     )
