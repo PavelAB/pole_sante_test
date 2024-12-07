@@ -83,7 +83,7 @@ const Header: React.FC = () => {
                             {
                                 linksForNavbar.map((link: CustomNavLinksProps, index: number) => {
                                     return (
-                                        <li>
+                                        <li key={"li" + index + link.text}>
                                             <CustomNavLinks key={index + link.text} to={link.to} text={link.text} />        
                                         </li>
                                     )

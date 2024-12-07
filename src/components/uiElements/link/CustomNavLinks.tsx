@@ -10,7 +10,7 @@ const CustomNavLinks: React.FC<CustomNavLinksProps> = ({to, text}) => {
     return (
         <NavLink  
             to={to}
-            className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} no-underline text-gray-900 hover:text-gray-400`}>
+            className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} no-underline text-black hover:text-slate-700`}>
             {text}
         </NavLink>
     )
