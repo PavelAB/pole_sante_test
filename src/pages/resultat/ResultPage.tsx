@@ -1,10 +1,10 @@
 
 
-const ResultPage: React.FC = () => {
+const ResultatPage: React.FC = () => {
     return (
         <div>
             <h1>Result Page</h1>
         </div>
     )
 }
-export default ResultPage
+export default ResultatPage

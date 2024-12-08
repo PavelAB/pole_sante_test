@@ -5,7 +5,7 @@ import ClassementPage from "../pages/classement/ClassementPage"
 import PlacePage from "../pages/place/PlacePage"
 import HopitalPage from "../pages/hopital/HopitalPage"
 import PreferencePage from "../pages/preference/PreferencePage"
-import ResultPage from "../pages/result/ResultPage"
+import ResultatPage from "../pages/resultat/ResultPage"
 import ServicePage from "../pages/service/ServicePage"
 
 
@@ -36,7 +36,7 @@ export const route: RouteObject[] = [{
         },
         {
             path: "resultat",
-            element: <ResultPage />
+            element: <ResultatPage />
         },
         {
             path: "service",
