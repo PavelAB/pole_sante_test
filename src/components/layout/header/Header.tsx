@@ -30,9 +30,6 @@ const Header: React.FC = () => {
     const handleIsOpenClick = (): void => {
         setIsOpen(prev => !prev)
     }
-    const handleMobileRedirection = (): void => {
-        setIsOpen(prev => !prev)
-    }
     function updateMobileTitle(pathName: string): void {
         let newTitle: string = "Home"
         switch (pathName) {
@@ -83,8 +80,8 @@ const Header: React.FC = () => {
                             {
                                 linksForNavbar.map((link: CustomNavLinksProps, index: number) => {
                                     return (
-                                        <li key={"li" + index + link.text}>
-                                            <CustomNavLinks key={index + link.text} to={link.to} text={link.text} />        
+                                        <li key={`li-${index}-${link.text}`}>
+                                            <CustomNavLinks to={link.to} text={link.text} />        
                                         </li>
                                     )
                                 })
@@ -94,9 +91,9 @@ const Header: React.FC = () => {
                     
                 </div>
                 <div className="mx-10 min-w-[41px] flex justify-center items-center sm:hidden">
-                        <button onClick={handleIsOpenClick}>
-                            <IconBars />
-                        </button>
+                    <button onClick={handleIsOpenClick}>
+                        <IconBars />
+                    </button>
                 </div>
             </div>
             <div>
@@ -105,8 +102,8 @@ const Header: React.FC = () => {
                         {
                             linksForNavbar.map((link: CustomNavLinksProps, index: number) => {
                                 return (
-                                    <li onClick={handleMobileRedirection}>
-                                        <CustomNavLinks key={index + link.text} to={link.to} text={link.text} />
+                                    <li key={`li-${index}-${link.text}`} onClick={handleIsOpenClick}>
+                                        <CustomNavLinks to={link.to} text={link.text} />
                                     </li>
                                 )
                             })
