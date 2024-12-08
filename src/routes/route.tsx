@@ -1,7 +1,7 @@
 import { RouteObject } from "react-router-dom"
 import App from "../App"
 import HomePage from "../pages/home/homePage"
-import RankingPage from "../pages/ranking/RankingPage"
+import ClassementPage from "../pages/classement/ClassementPage"
 import PlacePage from "../pages/place/PlacePage"
 import HospitalPage from "../pages/hospital/HospitalPage"
 import PreferencePage from "../pages/preference/PreferencePage"
@@ -20,7 +20,7 @@ export const route: RouteObject[] = [{
         },
         {
             path: "classement",
-            element: <RankingPage />
+            element: <ClassementPage />
         },
         {
             path: "place",

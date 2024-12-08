@@ -6,7 +6,7 @@ import ErrorMessage from "../../components/errorHandling/error/ErrorMessage"
 import { HydraView } from "../../types/HydraView"
 import PaginationBar from "../../components/uiElements/pagination/PaginationBar"
 import { useScreenSize } from "../../context/SharedContext"
-import ModalRanking from "./ModalRanking"
+import ModalClassement from "./ModalClassement"
 
 
 
@@ -14,7 +14,7 @@ import ModalRanking from "./ModalRanking"
 const columnsTitle: string[] = ["#", "Matricule", "Année académique", "Classement"]
 
 
-const RankingPage: React.FC = () => {
+const ClassementPage: React.FC = () => {
 
     const {screenSize} = useScreenSize()
     const [searchQuery, setSearchQuery] = useState<string>("/classements?page=1")
@@ -124,8 +124,8 @@ const RankingPage: React.FC = () => {
             <div className="w-[80%] mx-10 flex justify-center items-center">
                 {hydraView && <PaginationBar hydraView={hydraView} onClick={handleClick} />}
             </div>
-            <ModalRanking open={isOpen} searchString={modalSearchParam} onClose={closeModal}/>
+            <ModalClassement open={isOpen} searchString={modalSearchParam} onClose={closeModal}/>
         </div>
     )
 }
-export default RankingPage
+export default ClassementPage

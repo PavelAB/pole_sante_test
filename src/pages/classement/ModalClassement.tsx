@@ -13,7 +13,7 @@ interface ModalRankingProps {
 const columnsTitle: string[] = ["#", "Matricule", "Année académique", "Classement"]
 
 
-const ModalRanking: React.FC<ModalRankingProps> = ({open, onClose, searchString}) => {
+const ModalClassement: React.FC<ModalRankingProps> = ({open, onClose, searchString}) => {
 
     const { data: dataClassement, isLoading: isLoadingClassement, error: errorClassement} = useClassementByID({token:"", searchQuery: searchString, shouldFetch: searchString? true : false})
 
@@ -61,4 +61,4 @@ const ModalRanking: React.FC<ModalRankingProps> = ({open, onClose, searchString}
         </div>
     )
 }
-export default ModalRanking
+export default ModalClassement
