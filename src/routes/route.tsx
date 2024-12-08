@@ -3,7 +3,7 @@ import App from "../App"
 import HomePage from "../pages/home/homePage"
 import ClassementPage from "../pages/classement/ClassementPage"
 import PlacePage from "../pages/place/PlacePage"
-import HospitalPage from "../pages/hospital/HospitalPage"
+import HopitalPage from "../pages/hopital/HopitalPage"
 import PreferencePage from "../pages/preference/PreferencePage"
 import ResultPage from "../pages/result/ResultPage"
 import ServicePage from "../pages/service/ServicePage"
@@ -28,7 +28,7 @@ export const route: RouteObject[] = [{
         },
         {
             path: "hopital",
-            element: <HospitalPage />
+            element: <HopitalPage />
         },
         {
             path: "preference",
