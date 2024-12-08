@@ -6,6 +6,7 @@ import ErrorMessage from "../../components/errorHandling/error/ErrorMessage"
 import { HydraView } from "../../types/HydraView"
 import PaginationBar from "../../components/uiElements/pagination/PaginationBar"
 import { useScreenSize } from "../../context/SharedContext"
+import ModalRanking from "./ModalRanking"
 
 
 
@@ -16,9 +17,16 @@ const columnsTitle: string[] = ["#", "Matricule", "Année académique", "Classem
 const RankingPage: React.FC = () => {
 
     const {screenSize} = useScreenSize()
+    const [searchQuery, setSearchQuery] = useState<string>("/classements?page=1")
+
+    //Classement data
     const [classementArray, setClassementArray] = useState<Classement[]>([])
     const [hydraView, setHydraView] = useState<HydraView>()
-    const [searchQuery, setSearchQuery] = useState<string>("/classements?page=1")
+
+    //Modal
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [modalSearchParam, setModalSearchParam] = useState<string>()
+
 
     const { data: responseClassement, isLoading: isLoadingClassement, error: errorClassement } = useClassements({ token: "", searchQuery: searchQuery })
 
@@ -46,6 +54,14 @@ const RankingPage: React.FC = () => {
     function handleClick(s: string){
         setSearchQuery(s)
     }
+    function closeModal(){
+        setIsOpen(false)
+        setModalSearchParam("")
+    }
+    function openModal(searchParam: string){
+        setIsOpen(true)
+        setModalSearchParam(searchParam)
+    }
 
     return (
         <div className="max-w-[93%] mx-auto w-full col-span-12 flex flex-col items-center gap-5">
@@ -71,11 +87,15 @@ const RankingPage: React.FC = () => {
                         {
                             classementArray.map((classement: Classement, index: number) => {
                                 return (
-                                    <tr key={classement.id} className="text-center" style={{ backgroundColor: (index + 1) % 2 === 1 ? "#e5e7eb" : "transparent" }}>
-                                        <td className="p-3 text-sm text-black whitespace-nowrap">{classement.id}</td>
-                                        <td className="p-3 text-sm text-black whitespace-nowrap">{classement.matricule}</td>
-                                        <td className="p-3 text-sm text-black whitespace-nowrap">{classement.anacad}</td>
-                                        <td className="p-3 text-sm text-black whitespace-nowrap">{classement.rang}</td>
+                                    <tr 
+                                        onClick={() => openModal(classement["@id"])}
+                                        key={classement.id} 
+                                        className="text-center" 
+                                        style={{ backgroundColor: (index + 1) % 2 === 1 ? "#e5e7eb" : "transparent" }}>
+                                            <td className="p-3 text-sm text-black whitespace-nowrap">{classement.id}</td>
+                                            <td className="p-3 text-sm text-black whitespace-nowrap">{classement.matricule}</td>
+                                            <td className="p-3 text-sm text-black whitespace-nowrap">{classement.anacad}</td>
+                                            <td className="p-3 text-sm text-black whitespace-nowrap">{classement.rang}</td>
                                     </tr>
                                 )
                             })
@@ -88,7 +108,8 @@ const RankingPage: React.FC = () => {
                     classementArray.map((classement: Classement, index: number) => {
                         return (
                             <div
-                                key={`${index} - Card`} 
+                                key={`${index} - Card`}
+                                onClick={() => openModal(classement["@id"])} 
                                 className="p-4 w-[80%] mx-auto bg-gray-100 rounded-lg shadow flex flex-col gap-2 items-center justify-center">
                                     <p>{columnsTitle[0]} {classement.id}</p>
                                     <p>{columnsTitle[1]}: {classement.matricule}</p>
@@ -103,6 +124,7 @@ const RankingPage: React.FC = () => {
             <div className="w-[80%] mx-10 flex justify-center items-center">
                 {hydraView && <PaginationBar hydraView={hydraView} onClick={handleClick} />}
             </div>
+            <ModalRanking open={isOpen} searchString={modalSearchParam} onClose={closeModal}/>
         </div>
     )
 }
