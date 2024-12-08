@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { HydraView } from "../../../types/HydraView"
+import PaginationButton from "./PaginationButton"
 
 const PaginationBar:React.FC<{hydraView: HydraView, onClick: (searchQuery: string) => void}> = ({hydraView, onClick}) => {
 
@@ -22,6 +23,14 @@ const PaginationBar:React.FC<{hydraView: HydraView, onClick: (searchQuery: strin
         onClick(searchQuery)
     }
 
+    /**
+     * getLastCharacter - Retrieves the last character of a `Hydra:view` string that represents a page.
+     * If the last character is not a number or in case of an error, it returns `-1`.
+     * 
+     * @param {string | undefined} s - A string of type `Hydra:view` containing information about the page.
+     * 
+     * @returns {number} - The page number represented by the string `s`, or `-1` if the last character is invalid.
+     */
     function getLastCharacter(s: string | undefined):number {
         if(!s || s.length === 0) return -1
 
@@ -37,72 +46,65 @@ const PaginationBar:React.FC<{hydraView: HydraView, onClick: (searchQuery: strin
         <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
             {
                 <li>
-                    <button 
+                    <PaginationButton 
                         disabled={prevPage <= 0}
-                        onClick={() => handleClick(hydraView["hydra:previous"]!)}
-                        className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            Précédente
-                    </button>
+                        stringToReturn={hydraView["hydra:previous"]!}
+                        title={"Précédente"}
+                        onClick={(query) => handleClick(query)}
+                        addStyle="ms-0 rounded-s-lg"/>
                 </li>
             }
             {
                 firstPage > 0 && firstPage !== currentPage &&
                 <li>
-                    <button 
-                        onClick={() => handleClick(hydraView["hydra:first"]!)}
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            {firstPage}
-                    </button>
+                    <PaginationButton
+                        stringToReturn={hydraView["hydra:first"]!}
+                        title={firstPage}
+                        onClick={(query) => handleClick(query)}/>
                 </li>
             }
             {
                 currentPage - firstPage >= 2 && 
                 <li>
-                    <button
-                        disabled
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            ...
-                    </button>
+                    <PaginationButton 
+                        disabled={true}
+                        title={"..."}/>
                 </li>
             }
             {
                 currentPage &&
                 <li>
-                    <button
-                        disabled 
-                        className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
-                            {currentPage}
-                    </button>
+                    <PaginationButton 
+                        disabled={true}
+                        title={currentPage}
+                        replaceStyle={"flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"}/>
                 </li>
             }
             {
                 lastPage - currentPage >= 2 && 
                 <li>
-                    <button 
-                        disabled
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            ...
-                    </button>
+                    <PaginationButton 
+                        disabled={true}
+                        title={"..."}/>
                 </li>
             }
             {
                 lastPage > 0 && lastPage !== currentPage &&
                 <li>
-                    <button 
-                        onClick={() => handleClick(hydraView["hydra:last"]!)}
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            {lastPage}
-                    </button>
+                    <PaginationButton
+                        stringToReturn={hydraView["hydra:last"]!}
+                        title={lastPage}
+                        onClick={(query) => handleClick(query)}/>
                 </li>
             }
             {
                 <li>
-                    <button 
+                    <PaginationButton 
                         disabled={!(nextPage > 0 && nextPage <= lastPage)}
-                        onClick={() => handleClick(hydraView["hydra:next"]!)}
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            Suivante
-                    </button>
+                        stringToReturn={hydraView["hydra:next"]!}
+                        title={"Suivante"}
+                        onClick={(query) => handleClick(query)}
+                        addStyle="rounded-e-lg"/>
                 </li>
             }
         </ul>
