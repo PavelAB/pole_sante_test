@@ -23,3 +23,28 @@
 
 - **Headers de réponse :**  
   Le sujet suivant n'est pas celui que je maîtrise le mieux, mais je me suis posé la question concernant les headers de réponse. Ils me semblent un peu trop remplis. Effectivement, certaines propriétés ne devraient pas être présentes dans les réponses, car elles pourraient potentiellement causer des failles de sécurité.
+
+# **Partie 2 : Attribution automatique de stages**
+
+Malheureusement, je n’ai pas eu le temps d’essayer de réaliser cette partie. Pourtant, c’est peut-être la question qui m’a donné le plus envie d’essayer de la résoudre.
+
+# **Partie 3 : Conception d'une interface utilisateur responsive**
+
+## API et Hooks
+
+J’ai utilisé React Query pour récupérer les données du backend. J’ai décidé d’utiliser un couple fonction `fetch` et un hook. La fonction `fetch` est unique et réutilisable par différents hooks. Le hook, à son tour, gère la logique métier.
+
+### Remarque :
+
+- La propriété `token` peut sembler excessive, mais j’ai voulu ajouter une possibilité d’inclure un input pour le token directement dans le frontend. Celui-ci serait ensuite enregistré dans le `SharedContext` pour simuler une authentification. Malheureusement, je n’ai pas eu le temps de finaliser cette fonctionnalité.
+- Le paramètre `searchQuery` est un simple string pour simplifier l’utilisation des appels à l’API grâce aux propriétés comme `hydra:view`, `@id`, etc.
+
+## SharedContext
+
+Pour certaines parties du code, j’ai besoin d’obtenir des informations à jour sur la largeur de l’écran. J’obtiens cette information grâce à `window.innerWidth` et à un listener qui observe les changements de taille. J’ai décidé de stocker cette information dans `SharedContext`, qui enveloppe mon application. De cette manière, je peux disposer de données toujours à jour sur la taille de l’écran dans toute l’application, tout en évitant la duplication de code.
+
+# Pages
+
+- Pour afficher des tables, j’ai décidé de ne pas utiliser de bibliothèque. Je voulais pratiquer le HTML de base. Il y a de la duplication de code, car je n’ai pas eu le temps de refactoriser cela en une composante réutilisable et compréhensible.
+- Les cartes et le modal sont également répétitifs pour la même raison.
+- Pour gérer la responsivité, j’utilise l’affichage conditionnel. Je ne sais pas si c’est la meilleure solution, mais en tout cas, c’est mieux qu’utiliser `display: none`, qui était ma première idée.

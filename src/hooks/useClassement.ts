@@ -27,11 +27,6 @@ export const useClassements = ({
     shouldFetch = true 
     }:HookFetchParams ): UseQueryResult<SuccessResponse<Classement>, Error> => {
 
-
-    /**
-     * //TODO En implémentant de cette manière, je pourrai utiliser les paramètres 'hydra:view' pour simplifier la navigation à travers les pages. 
-     * L'inconvénient est que des vérifications supplémentaires seront nécessaires.
-     */
     const rankingURLRegex: RegExp = /^\/classements\?page=[1-9][0-9]{0,2}$/
 
     if(!pathValidator({regex: rankingURLRegex, stringToValidate: searchQuery}))
