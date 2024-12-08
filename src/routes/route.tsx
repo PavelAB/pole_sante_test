@@ -5,7 +5,7 @@ import ClassementPage from "../pages/classement/ClassementPage"
 import PlacePage from "../pages/place/PlacePage"
 import HopitalPage from "../pages/hopital/HopitalPage"
 import PreferencePage from "../pages/preference/PreferencePage"
-import ResultatPage from "../pages/resultat/ResultPage"
+import ResultatPage from "../pages/resultat/ResultatPage"
 import ServicePage from "../pages/service/ServicePage"
 
 
