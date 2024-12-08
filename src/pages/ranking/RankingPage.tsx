@@ -5,6 +5,7 @@ import { Classement } from "../../types/Classement"
 import ErrorMessage from "../../components/errorHandling/error/ErrorMessage"
 import { HydraView } from "../../types/HydraView"
 import PaginationBar from "../../components/uiElements/pagination/PaginationBar"
+import { useScreenSize } from "../../context/SharedContext"
 
 
 
@@ -14,10 +15,10 @@ const columnsTitle: string[] = ["#", "Matricule", "Année académique", "Classem
 
 const RankingPage: React.FC = () => {
 
-
+    const {screenSize} = useScreenSize()
     const [classementArray, setClassementArray] = useState<Classement[]>([])
     const [hydraView, setHydraView] = useState<HydraView>()
-    const [searchQuery, setSearchQuery] = useState<string>("/classements?page=4")
+    const [searchQuery, setSearchQuery] = useState<string>("/classements?page=1")
 
     const { data: responseClassement, isLoading: isLoadingClassement, error: errorClassement } = useClassements({ token: "", searchQuery: searchQuery })
 
@@ -27,7 +28,6 @@ const RankingPage: React.FC = () => {
             setHydraView(responseClassement["hydra:view"])
         }
     }, [responseClassement])
-
 
     if (!responseClassement && isLoadingClassement) {
         return (
@@ -50,7 +50,9 @@ const RankingPage: React.FC = () => {
     return (
         <div className="max-w-[93%] mx-auto w-full col-span-12 flex flex-col items-center gap-5">
             <h1 className="mb-10">Classements des Étudiants :</h1>
-            <div className="overflow-auto rounded-lg shadow w-full">
+            { screenSize && screenSize > 640 ?
+
+                <div className="overflow-auto rounded-lg shadow w-full">
                 <table className="w-full">
                     <thead className="bg-gray-50 border-b-2 border-gray-200">
                         <tr>
@@ -80,7 +82,24 @@ const RankingPage: React.FC = () => {
                         }
                     </tbody>
                 </table>
+            </div> :
+            <div className="grid grid-cols-1 w-full gap-4">
+                {
+                    classementArray.map((classement: Classement, index: number) => {
+                        return (
+                            <div
+                                key={`${index} - Card`} 
+                                className="p-4 w-[80%] mx-auto bg-gray-100 rounded-lg shadow flex flex-col gap-2 items-center justify-center">
+                                    <p>{columnsTitle[0]} {classement.id}</p>
+                                    <p>{columnsTitle[1]}: {classement.matricule}</p>
+                                    <p>{columnsTitle[2]}: {classement.anacad}</p>
+                                    <p>{columnsTitle[3]}: {classement.rang}</p>
+                            </div>
+                        )
+                    })
+                }
             </div>
+            }
             <div className="w-[80%] mx-10 flex justify-center items-center">
                 {hydraView && <PaginationBar hydraView={hydraView} onClick={handleClick} />}
             </div>
