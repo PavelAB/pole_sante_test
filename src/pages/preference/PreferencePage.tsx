@@ -114,7 +114,7 @@ const PreferencePage: React.FC = () => {
                             <div
                                 key={`${index} - Card`}
                                 onClick={() => openModal(preference["@id"])} 
-                                className="p-4 w-[80%] mx-auto bg-gray-100 rounded-lg shadow flex flex-col gap-2 items-center justify-center">
+                                className="p-4 w-[80%] mx-auto bg-gray-100 rounded-lg shadow flex flex-col gap-2 items-center justify-center hover:border border-blue-300">
                                     <p>{columnsTitle[0]} {preference.id}</p>
                                     <p>{columnsTitle[1]}: {preference.anacad}</p>
                                     <p>{columnsTitle[2]}: {preference.matricule}</p>

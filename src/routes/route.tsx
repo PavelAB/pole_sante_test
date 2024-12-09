@@ -29,7 +29,7 @@ export const route: RouteObject[] = [{
             element: <PlacePage />
         },
         {
-            path: "hopital",
+            path: "hopitals",
             element: <HopitalPage />
         },
         {
@@ -45,7 +45,7 @@ export const route: RouteObject[] = [{
             element: <ResultatPage />
         },
         {
-            path: "service",
+            path: "services",
             element: <ServicePage />
         },
         {

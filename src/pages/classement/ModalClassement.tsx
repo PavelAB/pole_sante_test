@@ -13,14 +13,14 @@ const ModalClassement: React.FC<ModalProps> = ({open, onClose, searchString}) =>
 
     const { data: dataClassement, isLoading: isLoadingClassement, error: errorClassement} = useClassementByID({token:"", searchQuery: searchString, shouldFetch: searchString? true : false})
 
-    if (!dataClassement) {
+    if (!dataClassement && isLoadingClassement) {
         return (
             <div className={`fixed inset-0 flex justify-center items-center transition-colors ${open? "visible bg-black/20" : "hidden"}`}>
                 <LoaderElement />
             </div>
         )
     }
-    if (errorClassement || (!dataClassement && !isLoadingClassement)) {
+    if (errorClassement || (!dataClassement && !isLoadingClassement) || !dataClassement) {
         return (
             <div className={`fixed inset-0 flex justify-center items-center transition-colors ${open? "visible bg-black/20" : "hidden"}`}>
                 <ErrorMessage

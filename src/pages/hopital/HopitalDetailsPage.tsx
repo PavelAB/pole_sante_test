@@ -26,7 +26,7 @@ const HopitalDetailsPage: React.FC = () => {
             <LoaderElement />
         )
     }
-    if (errorHopital || (!dataHopital && !isLoadingHopital)) {
+if (errorHopital || (!dataHopital && !isLoadingHopital) || !dataHopital) {
         return (
             <ErrorMessage
                 title="Non trouvé"
@@ -40,7 +40,7 @@ const HopitalDetailsPage: React.FC = () => {
     return (
         <div className="max-w-[93%] mx-auto w-full col-span-12 flex flex-col items-center gap-5">
             <h1 className="mb-10">
-                {columnsTitle[1]}: {dataHopital!.nomcourt}
+                {columnsTitle[1]}: {dataHopital.nomcourt}
             </h1>
         </div>
     )

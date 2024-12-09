@@ -8,10 +8,10 @@ import IconBars from "../../uiElements/icones/IconBars"
 const linksForNavbar: CustomNavLinksProps[]= [
     {to:"/classement", text:"Classement"},
     {to:"/place", text:"Disponibilités"},
-    {to:"/hopital", text:"Hopitals"},
+    {to:"/hopitals", text:"Hopitals"},
     {to:"/preference", text:"Preferences"},
     {to:"/resultat", text:"Répartition"},
-    {to:"/service", text:"Services"}
+    {to:"/services", text:"Services"}
 ]
 
 
@@ -24,6 +24,7 @@ const Header: React.FC = () => {
 
 
     useEffect(()=>{        
+        console.log(location.pathname.split("/")[1])
         updateMobileTitle(location.pathname.split("/")[1])
     },[location.pathname])
 
@@ -39,7 +40,7 @@ const Header: React.FC = () => {
             case "place":
                 newTitle = "Disponibilités"
                 break;
-            case "hopital":
+            case "hopitals":
                 newTitle = "Hopitals"
                 break;
             case "preference":
@@ -48,7 +49,7 @@ const Header: React.FC = () => {
             case "resultat":
                 newTitle = "Répartition"
                 break;
-            case "service":
+            case "services":
                 newTitle = "Services"
                 break;
             default:

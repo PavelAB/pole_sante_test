@@ -25,7 +25,7 @@ const ServiceDetailsPage: React.FC = () => {
             <LoaderElement />
         )
     }
-    if (errorService || (!dataService && !isLoadingService)) {
+    if (errorService || (!dataService && !isLoadingService) || !dataService) {
         return (
             <ErrorMessage
                 title="Non trouvé"
@@ -39,7 +39,7 @@ const ServiceDetailsPage: React.FC = () => {
     return (
         <div className="max-w-[93%] mx-auto w-full col-span-12 flex flex-col items-center gap-5">
             <h1 className="mb-10">
-                {columnsTitle[1]}: {dataService!.nom}
+                {columnsTitle[1]}: {dataService.nom}
             </h1>
         </div>
     )

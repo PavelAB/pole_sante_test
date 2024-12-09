@@ -107,7 +107,7 @@ const PlacePage: React.FC = () => {
                             <div
                                 key={`${index} - Card`}
                                 onClick={() => openModal(place["@id"])} 
-                                className="p-4 w-[80%] mx-auto bg-gray-100 rounded-lg shadow flex flex-col gap-2 items-center justify-center">
+                                className="p-4 w-[80%] mx-auto bg-gray-100 rounded-lg shadow flex flex-col gap-2 items-center justify-center hover:border border-blue-300">
                                     <p>{columnsTitle[0]} {place.id}</p>
                                     <p className="cursor-pointer" onClick={() => navigate(`/hopitals/${place.hopital}`)}>{columnsTitle[1]}: {place.hopital}</p>
                                     <p className="cursor-pointer" onClick={() => navigate(`/services/${place.service}`)}>{columnsTitle[2]}: {place.service}</p>
