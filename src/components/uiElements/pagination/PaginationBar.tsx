@@ -10,6 +10,7 @@ const PaginationBar:React.FC<{hydraView: HydraView, onClick: (searchQuery: strin
     const [nextPage, setNextPage] = useState<number>(-1)
     const [lastPage, setLastPage] = useState<number>(-1)
 
+    console.log(hydraView)
 
     useEffect(() => {
         setFirstPage(getLastCharacter(hydraView["hydra:first"]))
@@ -23,23 +24,25 @@ const PaginationBar:React.FC<{hydraView: HydraView, onClick: (searchQuery: strin
         onClick(searchQuery)
     }
 
+    
     /**
-     * getLastCharacter - Retrieves the last character of a `Hydra:view` string that represents a page.
-     * If the last character is not a number or in case of an error, it returns `-1`.
+     * getLastCharacter - Retrieves the last sequence of digits in a string that represents a page number.
+     * If the last sequence is not a number or if there is no sequence of digits at the end, it returns `-1`.
      * 
-     * @param {string | undefined} s - A string of type `Hydra:view` containing information about the page.
+     * @param {string | undefined} s - A string, typically from a `Hydra:view` response, containing page-related information.
      * 
-     * @returns {number} - The page number represented by the string `s`, or `-1` if the last character is invalid.
+     * @returns {number} - The last sequence of digits from the string, representing the page number.
+     * Returns `-1` if the last sequence is not a valid number or if no digits are found at the end.
      */
     function getLastCharacter(s: string | undefined):number {
         if(!s || s.length === 0) return -1
 
-        const t: string = s[s.length-1]
+        const match = s.match(/\d+$/)
 
-        if(isNaN(Number(t)))
-            return -1
-        else
-            return Number(t)
+        if (match)
+            return Number(match[0])
+    
+        return -1
     }
 
     return (

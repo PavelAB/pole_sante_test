@@ -1,10 +1,14 @@
+import ErrorMessage from "../../components/errorHandling/error/ErrorMessage"
 
 
 const ResultatPage: React.FC = () => {
     return (
-        <div>
-            <h1>Result Page</h1>
-        </div>
+        <ErrorMessage
+            title="Non disponible"
+            subTitle="La page est en cours d'implémentation."
+            goToPageTitle="Page d'accueil"
+            goToPageURL="/"
+        />
     )
 }
 export default ResultatPage
