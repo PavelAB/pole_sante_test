@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import ErrorMessage from "../../components/errorHandling/error/ErrorMessage"
 import IconX from "../../components/uiElements/icones/IconX"
 import LoaderElement from "../../components/uiElements/loaderSpin/LoaderElement"
@@ -9,7 +10,7 @@ const columnsTitle: string[] = ["#", "Année académique", "Matricule", "Hôpita
 
 const ModalPreference: React.FC<ModalProps> = ({open, onClose, searchString}) => {
     
-    
+    const navigate = useNavigate()
     
     const { data: dataPreference, isLoading: isLoadingPreference, error: errorPreference} = usePreferenceByID({token:"", searchQuery: searchString, shouldFetch: searchString? true : false})
 
@@ -51,7 +52,7 @@ const ModalPreference: React.FC<ModalProps> = ({open, onClose, searchString}) =>
                                     <p>{columnsTitle[1]}: {dataPreference.anacad}</p>
                                     <p>{columnsTitle[2]}: {dataPreference.matricule}</p>
                                     <p>{columnsTitle[3]}: {dataPreference.hopital}</p>
-                                    <p>{columnsTitle[4]}: {dataPreference.service}</p>
+                                    <p className="cursor-pointer" onClick={() => navigate(`/services/${dataPreference.service}`)}>{columnsTitle[4]}: {dataPreference.service}</p>
                                     <p>{columnsTitle[5]}: {dataPreference.ordre}</p>
                                     <p className={`p-1.5 text-xs font-medium uppercase tracking-wider ${dataPreference.typepref === 1 ? "text-green-800 bg-green-200": "text-gray-800 bg-gray-200"} rounded-lg bg-opacity-50`}>{dataPreference.typepref === 1 ? "Préférence" : "Exclusion"}</p>
                         </div>

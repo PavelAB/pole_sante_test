@@ -7,12 +7,14 @@ import LoaderElement from "../../components/uiElements/loaderSpin/LoaderElement"
 import ErrorMessage from "../../components/errorHandling/error/ErrorMessage"
 import PaginationBar from "../../components/uiElements/pagination/PaginationBar"
 import ModalPlace from "./ModalPlace"
+import { useNavigate } from "react-router-dom"
 
 const columnsTitle: string[] = ["#", "Hôpital", "Service", "Places disponibles"]
 
 const PlacePage: React.FC = () => {
 
     const {screenSize} = useScreenSize()
+    const navigate = useNavigate()
     const [searchQuery, setSearchQuery] = useState<string>("/places?page=1")
 
     //Place data
@@ -89,7 +91,7 @@ const PlacePage: React.FC = () => {
                                         style={{ backgroundColor: (index + 1) % 2 === 1 ? "#e5e7eb" : "transparent" }}>
                                             <td className="p-3 text-sm text-black whitespace-nowrap">{place.id}</td>
                                             <td className="p-3 text-sm text-black whitespace-nowrap">{place.hopital}</td>
-                                            <td className="p-3 text-sm text-black whitespace-nowrap">{place.service}</td>
+                                            <td className="p-3 text-sm text-black whitespace-nowrap cursor-pointer" onClick={() => navigate(`/services/${place.service}`)}>{place.service}</td>
                                             <td className="p-3 text-sm text-black whitespace-nowrap">{place.places}</td>
                                     </tr>
                                 )
@@ -100,16 +102,16 @@ const PlacePage: React.FC = () => {
             </div> :
             <div className="grid grid-cols-1 w-full gap-4">
                 {
-                    placeArray.map((Place: Place, index: number) => {
+                    placeArray.map((place: Place, index: number) => {
                         return (
                             <div
                                 key={`${index} - Card`}
-                                onClick={() => openModal(Place["@id"])} 
+                                onClick={() => openModal(place["@id"])} 
                                 className="p-4 w-[80%] mx-auto bg-gray-100 rounded-lg shadow flex flex-col gap-2 items-center justify-center">
-                                    <p>{columnsTitle[0]} {Place.id}</p>
-                                    <p>{columnsTitle[1]}: {Place.hopital}</p>
-                                    <p>{columnsTitle[2]}: {Place.service}</p>
-                                    <p>{columnsTitle[3]}: {Place.places}</p>
+                                    <p>{columnsTitle[0]} {place.id}</p>
+                                    <p>{columnsTitle[1]}: {place.hopital}</p>
+                                    <p className="cursor-pointer" onClick={() => navigate(`/services/${place.service}`)}>{columnsTitle[2]}: {place.service}</p>
+                                    <p>{columnsTitle[3]}: {place.places}</p>
                             </div>
                         )
                     })

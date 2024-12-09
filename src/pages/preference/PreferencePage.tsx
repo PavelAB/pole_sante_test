@@ -7,6 +7,7 @@ import LoaderElement from "../../components/uiElements/loaderSpin/LoaderElement"
 import ErrorMessage from "../../components/errorHandling/error/ErrorMessage"
 import PaginationBar from "../../components/uiElements/pagination/PaginationBar"
 import ModalPreference from "./ModalPreference"
+import { useNavigate } from "react-router-dom"
 
 
 const columnsTitle: string[] = ["#", "Année académique", "Matricule", "Hôpital", "Service", "Ordre de choix", "Préférence"]
@@ -14,6 +15,7 @@ const columnsTitle: string[] = ["#", "Année académique", "Matricule", "Hôpita
 const PreferencePage: React.FC = () => {
 
     const {screenSize} = useScreenSize()
+    const navigate = useNavigate()
     const [searchQuery, setSearchQuery] = useState<string>("/preferences?page=1")
 
     //Preference data
@@ -95,7 +97,7 @@ const PreferencePage: React.FC = () => {
                                             <td className="p-3 text-sm text-black whitespace-nowrap">{preference.anacad}</td>
                                             <td className="p-3 text-sm text-black whitespace-nowrap">{preference.matricule}</td>
                                             <td className="p-3 text-sm text-black whitespace-nowrap">{preference.hopital}</td>
-                                            <td className="p-3 text-sm text-black whitespace-nowrap">{preference.service}</td>
+                                            <td className="p-3 text-sm text-black whitespace-nowrap cursor-pointer"onClick={() => navigate(`/services/${preference.service}`)}>{preference.service}</td>
                                             <td className="p-3 text-sm text-black whitespace-nowrap">{preference.ordre}</td>
                                             <td><p className={`p-1.5 text-xs font-medium uppercase tracking-wider ${preference.typepref === 1 ? "text-green-800 bg-green-200": "text-gray-800 bg-gray-200"} rounded-lg bg-opacity-50`}>{preference.typepref === 1 ? "Préférence" : "Exclusion"}</p></td>
                                     </tr>
@@ -117,7 +119,7 @@ const PreferencePage: React.FC = () => {
                                     <p>{columnsTitle[1]}: {preference.anacad}</p>
                                     <p>{columnsTitle[2]}: {preference.matricule}</p>
                                     <p>{columnsTitle[3]}: {preference.hopital}</p>
-                                    <p>{columnsTitle[4]}: {preference.service}</p>
+                                    <p className="cursor-pointer" onClick={() => navigate(`/services/${preference.service}`)}>{columnsTitle[4]}: {preference.service}</p>
                                     <p>{columnsTitle[5]}: {preference.ordre}</p>
                                     <p className={`p-1.5 text-xs font-medium uppercase tracking-wider ${preference.typepref === 1 ? "text-green-800 bg-green-200": "text-gray-800 bg-gray-200"} rounded-lg bg-opacity-50`}>{preference.typepref === 1 ? "Préférence" : "Exclusion"}</p>
 

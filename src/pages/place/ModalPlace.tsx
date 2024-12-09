@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import ErrorMessage from "../../components/errorHandling/error/ErrorMessage"
 import IconX from "../../components/uiElements/icones/IconX"
 import LoaderElement from "../../components/uiElements/loaderSpin/LoaderElement"
@@ -7,6 +8,8 @@ import { ModalProps } from "../../types/ModalProps"
 const columnsTitle: string[] = ["#", "Hôpital", "Service", "Places disponibles"]
 
 const ModalPlace: React.FC<ModalProps> = ({open, onClose, searchString}) => {
+
+    const navigate = useNavigate()
 
     const { data: dataPlace, isLoading: isLoadingPlace, error: errorPlace} = usePlaceByID({token:"", searchQuery: searchString, shouldFetch: searchString? true : false})
 
@@ -46,7 +49,7 @@ const ModalPlace: React.FC<ModalProps> = ({open, onClose, searchString}) => {
                         </h1>
                         <div className="flex flex-col gap-2 justify-center items-center">
                             <p>{columnsTitle[1]}: {dataPlace.hopital}</p>
-                            <p>{columnsTitle[2]}: {dataPlace.service}</p>
+                            <p className="cursor-pointer" onClick={() => navigate(`/services/${dataPlace.service}`)}>{columnsTitle[2]}: {dataPlace.service}</p>
                             <p>{columnsTitle[3]}: {dataPlace.places}</p>
                         </div>
 
