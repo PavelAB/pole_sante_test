@@ -24,7 +24,6 @@ const Header: React.FC = () => {
 
 
     useEffect(()=>{        
-        console.log(location.pathname.split("/")[1])
         updateMobileTitle(location.pathname.split("/")[1])
     },[location.pathname])
 
