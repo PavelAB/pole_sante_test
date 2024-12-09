@@ -10,6 +10,7 @@ const columnsTitle: string[] = ["#", "Année académique", "Matricule", "Hôpita
 const ModalPreference: React.FC<ModalProps> = ({open, onClose, searchString}) => {
     
     
+    
     const { data: dataPreference, isLoading: isLoadingPreference, error: errorPreference} = usePreferenceByID({token:"", searchQuery: searchString, shouldFetch: searchString? true : false})
 
     if (!dataPreference) {

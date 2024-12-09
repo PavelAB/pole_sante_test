@@ -10,8 +10,6 @@ const PaginationBar:React.FC<{hydraView: HydraView, onClick: (searchQuery: strin
     const [nextPage, setNextPage] = useState<number>(-1)
     const [lastPage, setLastPage] = useState<number>(-1)
 
-    console.log(hydraView)
-
     useEffect(() => {
         setFirstPage(getLastCharacter(hydraView["hydra:first"]))
         setPrevPage(getLastCharacter(hydraView["hydra:previous"]))

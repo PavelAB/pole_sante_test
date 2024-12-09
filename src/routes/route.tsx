@@ -7,6 +7,7 @@ import HopitalPage from "../pages/hopital/HopitalPage"
 import PreferencePage from "../pages/preference/PreferencePage"
 import ResultatPage from "../pages/resultat/ResultatPage"
 import ServicePage from "../pages/service/ServicePage"
+import ServiceDetailsPage from "../pages/service/ServiceDetailsPage"
 
 
 
@@ -42,5 +43,9 @@ export const route: RouteObject[] = [{
             path: "service",
             element: <ServicePage />
         },
+        {
+            path: "services/:ID_Service",
+            element: <ServiceDetailsPage />
+        }
     ]
 }]
