@@ -14,14 +14,14 @@ const ModalPreference: React.FC<ModalProps> = ({open, onClose, searchString}) =>
     
     const { data: dataPreference, isLoading: isLoadingPreference, error: errorPreference} = usePreferenceByID({token:"", searchQuery: searchString, shouldFetch: searchString? true : false})
 
-    if (!dataPreference) {
+    if (!dataPreference && isLoadingPreference) {
         return (
             <div className={`fixed inset-0 flex justify-center items-center transition-colors ${open? "visible bg-black/20" : "hidden"}`}>
                 <LoaderElement />
             </div>
         )
     }
-    if (errorPreference || (!dataPreference && !isLoadingPreference)) {
+    if (errorPreference || (!dataPreference && !isLoadingPreference) || !dataPreference) {
         return (
             <div className={`fixed inset-0 flex justify-center items-center transition-colors ${open? "visible bg-black/20" : "hidden"}`}>
                 <ErrorMessage
@@ -51,7 +51,7 @@ const ModalPreference: React.FC<ModalProps> = ({open, onClose, searchString}) =>
                         <div className="flex flex-col gap-2 justify-center items-center">
                                     <p>{columnsTitle[1]}: {dataPreference.anacad}</p>
                                     <p>{columnsTitle[2]}: {dataPreference.matricule}</p>
-                                    <p>{columnsTitle[3]}: {dataPreference.hopital}</p>
+                                    <p className="cursor-pointer" onClick={() => navigate(`/hopitals/${dataPreference.hopital}`)}>{columnsTitle[3]}: {dataPreference.hopital}</p>
                                     <p className="cursor-pointer" onClick={() => navigate(`/services/${dataPreference.service}`)}>{columnsTitle[4]}: {dataPreference.service}</p>
                                     <p>{columnsTitle[5]}: {dataPreference.ordre}</p>
                                     <p className={`p-1.5 text-xs font-medium uppercase tracking-wider ${dataPreference.typepref === 1 ? "text-green-800 bg-green-200": "text-gray-800 bg-gray-200"} rounded-lg bg-opacity-50`}>{dataPreference.typepref === 1 ? "Préférence" : "Exclusion"}</p>

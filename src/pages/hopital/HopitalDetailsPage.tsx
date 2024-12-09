@@ -1,31 +1,32 @@
+import { useParams } from "react-router-dom"
+import { useHopitalByID } from "../../hooks/useHopital"
 import { useEffect, useState } from "react"
 import LoaderElement from "../../components/uiElements/loaderSpin/LoaderElement"
 import ErrorMessage from "../../components/errorHandling/error/ErrorMessage"
-import { useServiceByID } from "../../hooks/useService"
-import { useParams } from "react-router-dom"
 
 
-const columnsTitle: string[] = ["#", "Nom du service"]
+const columnsTitle: string[] = ["#", "Nom abrégé de l'hôpital"]
 
-const ServiceDetailsPage: React.FC = () => {
+const HopitalDetailsPage: React.FC = () => {
 
-    const { ID_Service } = useParams()
+    const { ID_Hopital } = useParams()
 
     const [searchString, setSearchString] = useState<string>()
 
-    const { data: dataService, isLoading: isLoadingService, error: errorService } = useServiceByID({ token: "", searchQuery: searchString, shouldFetch: searchString ? true : false })
+    
+
+    const { data: dataHopital, isLoading: isLoadingHopital, error: errorHopital } = useHopitalByID({ token: "", searchQuery: searchString, shouldFetch: searchString ? true : false })
 
     useEffect(()=>{
-        setSearchString(`/services/${ID_Service}`)
-    }, [ID_Service])
+        setSearchString(`/hopitals/${ID_Hopital}`)
+    }, [ID_Hopital])
 
-
-    if (!dataService && isLoadingService) {
+    if (!dataHopital && isLoadingHopital) {
         return (
             <LoaderElement />
         )
     }
-    if (errorService || (!dataService && !isLoadingService)) {
+    if (errorHopital || (!dataHopital && !isLoadingHopital)) {
         return (
             <ErrorMessage
                 title="Non trouvé"
@@ -39,9 +40,9 @@ const ServiceDetailsPage: React.FC = () => {
     return (
         <div className="max-w-[93%] mx-auto w-full col-span-12 flex flex-col items-center gap-5">
             <h1 className="mb-10">
-                {columnsTitle[1]}: {dataService!.nom}
+                {columnsTitle[1]}: {dataHopital!.nomcourt}
             </h1>
         </div>
     )
 }
-export default ServiceDetailsPage
+export default HopitalDetailsPage

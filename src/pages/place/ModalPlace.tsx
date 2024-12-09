@@ -13,14 +13,14 @@ const ModalPlace: React.FC<ModalProps> = ({open, onClose, searchString}) => {
 
     const { data: dataPlace, isLoading: isLoadingPlace, error: errorPlace} = usePlaceByID({token:"", searchQuery: searchString, shouldFetch: searchString? true : false})
 
-    if (!dataPlace) {
+    if (!dataPlace && isLoadingPlace) {
         return (
             <div className={`fixed inset-0 flex justify-center items-center transition-colors ${open? "visible bg-black/20" : "hidden"}`}>
                 <LoaderElement />
             </div>
         )
     }
-    if (errorPlace || (!dataPlace && !isLoadingPlace)) {
+    if (errorPlace || (!dataPlace && !isLoadingPlace) || !dataPlace) {
         return (
             <div className={`fixed inset-0 flex justify-center items-center transition-colors ${open? "visible bg-black/20" : "hidden"}`}>
                 <ErrorMessage
@@ -48,7 +48,7 @@ const ModalPlace: React.FC<ModalProps> = ({open, onClose, searchString}) => {
                             # {dataPlace?.id}
                         </h1>
                         <div className="flex flex-col gap-2 justify-center items-center">
-                            <p>{columnsTitle[1]}: {dataPlace.hopital}</p>
+                            <p className="cursor-pointer" onClick={() => navigate(`/hopitals/${dataPlace.hopital}`)}>{columnsTitle[1]}: {dataPlace.hopital}</p>
                             <p className="cursor-pointer" onClick={() => navigate(`/services/${dataPlace.service}`)}>{columnsTitle[2]}: {dataPlace.service}</p>
                             <p>{columnsTitle[3]}: {dataPlace.places}</p>
                         </div>

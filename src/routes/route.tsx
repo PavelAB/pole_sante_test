@@ -8,6 +8,7 @@ import PreferencePage from "../pages/preference/PreferencePage"
 import ResultatPage from "../pages/resultat/ResultatPage"
 import ServicePage from "../pages/service/ServicePage"
 import ServiceDetailsPage from "../pages/service/ServiceDetailsPage"
+import HopitalDetailsPage from "../pages/hopital/HopitalDetailsPage"
 
 
 
@@ -30,6 +31,10 @@ export const route: RouteObject[] = [{
         {
             path: "hopital",
             element: <HopitalPage />
+        },
+        {
+            path: "hopitals/:ID_Hopital",
+            element: <HopitalDetailsPage />
         },
         {
             path: "preference",

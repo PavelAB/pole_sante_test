@@ -4,23 +4,20 @@ import { HydraView } from "../../types/HydraView"
 import { useHopitals } from "../../hooks/useHopital"
 import LoaderElement from "../../components/uiElements/loaderSpin/LoaderElement"
 import ErrorMessage from "../../components/errorHandling/error/ErrorMessage"
-import ModalHopital from "./ModalHopital"
 import PaginationBar from "../../components/uiElements/pagination/PaginationBar"
+import { useNavigate } from "react-router-dom"
 
 
 const columnsTitle: string[] = ["#", "Nom abrégé de l'hôpital"]
 
 const HopitalPage: React.FC = () => {
 
+    const navigate = useNavigate()
     const [searchQuery, setSearchQuery] = useState<string>("/hopitals?page=1")
 
     //Hopitals data
     const [hopitalArray, setHopitalArray] = useState<Hopital[]>([])
     const [hydraView, setHydraView] = useState<HydraView>()
-
-    //Modal
-    const [isOpen, setIsOpen] = useState<boolean>(false)
-    const [modalSearchParam, setModalSearchParam] = useState<string>()
 
     const { data: responseHopital, isLoading: isLoadingHopital, error: errorHopital } = useHopitals({ token: "", searchQuery: searchQuery })
 
@@ -48,14 +45,6 @@ const HopitalPage: React.FC = () => {
     function handleClick(s: string) {
         setSearchQuery(s)
     }
-    function closeModal() {
-        setIsOpen(false)
-        setModalSearchParam("")
-    }
-    function openModal(searchParam: string) {
-        setIsOpen(true)
-        setModalSearchParam(searchParam)
-    }
 
     return (
         <div className="max-w-[93%] mx-auto w-full col-span-12 flex flex-col items-center gap-5">
@@ -82,7 +71,7 @@ const HopitalPage: React.FC = () => {
                             hopitalArray.map((hopital: Hopital, index: number) => {
                                 return (
                                     <tr
-                                        onClick={() => openModal(hopital["@id"])}
+                                        onClick={() => navigate(hopital["@id"])}
                                         key={hopital.id}
                                         className="text-center"
                                         style={{ backgroundColor: (index + 1) % 2 === 1 ? "#e5e7eb" : "transparent" }}>
@@ -98,7 +87,6 @@ const HopitalPage: React.FC = () => {
             <div className="w-[80%] mx-10 flex justify-center items-center">
                 {hydraView && <PaginationBar hydraView={hydraView} onClick={handleClick} />}
             </div>
-            <ModalHopital open={isOpen} searchString={modalSearchParam} onClose={closeModal} />
         </div>
     )
 }
